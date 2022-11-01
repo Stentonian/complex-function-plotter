@@ -3,23 +3,28 @@ from visual.controls import *
 import numpy as np
 import math
 
-dimension = 600 # all the windows sizes are scaled to this number (so change this number if you want to resize)
+# all the windows sizes are scaled to this number (so change this number if you want to resize)
+dimension = 600 
 Range = 20
 
 # the real axis for the domain plane is perpindicular to that of the image Plane, while thier imaginary azes are parallel
-RealDisplay = display(title='Imaginary axes paralell, real axes orthogonal', x=0, y=0, width=dimension, height=dimension, background=color.white)
+RealDisplay = canvas(title='Imaginary axes paralell, real axes orthogonal', x=0, y=0, width=dimension, height=dimension, background=color.white)
 RealDisplay.range = Range
 
 # the imaginary axis for the domain plane is perpindicular to that of the image Plane, while thier real azes are parallel
-ImagDisplay = display(title='Real axes paralell, Imaginary axes orthogonal', x=dimension+10, y=0, width=dimension, height=dimension, background=color.white)
+ImagDisplay = canvas(title='Real axes paralell, Imaginary axes orthogonal', x=dimension+10, y=0, width=dimension, height=dimension, background=color.white)
 ImagDisplay.range = Range
 
 # control panel equipment
 control = controls(title='Controlling the Scene', x=0, y=dimension+10, width=dimension*2, height=150)
-realSliderA = slider( pos=(-80,5), length=50, min=-10, max=10, value=5, action=lambda: sliderAction() ) # increase side A of the domain rectangle, parallel to the real axis
-realSliderB = slider( pos=(-80,-5), length=50, min=-10, max=10, value=0, action=lambda: sliderAction() ) # increase side B of the domain rectangle, parallel to the real axis
-imagSliderA = slider( pos=(0,5), length=50, min=-10, max=10, value=5, action=lambda: sliderAction() ) # increase side A of the domain rectangle, parallel to the imaginary axis
-imagSliderB = slider( pos=(0,-5), length=50, min=-10, max=10, value=0, action=lambda: sliderAction() ) # increase side B of the domain rectangle, parallel to the imaginary axis
+# increase side A of the domain rectangle, parallel to the real axis
+realSliderA = slider( pos=vector(-80,5,0), length=50, min=-10, max=10, value=5, action=lambda: sliderAction() ) 
+# increase side B of the domain rectangle, parallel to the real axis
+realSliderB = slider( pos=vector(-80,-5,0), length=50, min=-10, max=10, value=0, action=lambda: sliderAction() ) 
+# increase side A of the domain rectangle, parallel to the imaginary axis
+imagSliderA = slider( pos=vector(0,5,0), length=50, min=-10, max=10, value=5, action=lambda: sliderAction() ) 
+# increase side B of the domain rectangle, parallel to the imaginary axis
+imagSliderB = slider( pos=vector(0,-5,0), length=50, min=-10, max=10, value=0, action=lambda: sliderAction() ) 
 
 # ==============================================================================================================
 # control methods for the sliders
@@ -58,57 +63,65 @@ def sliderAction():
 # construct the grid systems (so that you can see the domain and image Planes clearly)
 def drawRealDomainPlane(max=15, rad=0.03, spacing=2):
     RealDisplay.select()
-    gray = (0.6,0.6,0.6)
+    gray = vector(0.6,0.6,0.6)
     
     for v in range(-max,max+1,spacing):
-        cylinder(pos=(v,-max,0), axis=(0,2*max,0), radius=rad, color=gray, opacity=0.2) ## parallel to y axis, vary x
-        cylinder(pos=(-max,v,0), axis=(2*max,0,0), radius=rad, color=gray, opacity=0.2) ## parallel to x axis, vary y
+## parallel to y axis, vary x
+        cylinder(pos=vector(v,-max,0), axis=vector(0,2*max,0), radius=rad, color=gray, opacity=0.2) 
+## parallel to x axis, vary y
+        cylinder(pos=vector(-max,v,0), axis=vector(2*max,0,0), radius=rad, color=gray, opacity=0.2) 
 
-    Raxis=cylinder(color=color.green, pos=(-max,0,0), axis=(2*max,0,0), radius=5*rad)
-    Rlbl=label(pos=(max+1,0,0), text="Re", color=gray, opacity=0, height=30)
+    Raxis=cylinder(color=color.green, pos=vector(-max,0,0), axis=vector(2*max,0,0), radius=5*rad)
+    Rlbl=label(pos=vector(max+1,0,0), text="Re", color=gray, opacity=0, height=30)
     
-    Iaxis=cylinder(color=color.magenta, pos=(0,-max,0), axis=(0,2*max,0), radius=5*rad)
-    Ilbl=label(pos=(0,max+1,0), text="Im", color=gray, opacity=0, height=30)
+    Iaxis=cylinder(color=color.magenta, pos=vector(0,-max,0), axis=vector(0,2*max,0), radius=5*rad)
+    Ilbl=label(pos=vector(0,max+1,0), text="Im", color=gray, opacity=0, height=30)
 
 def drawImagDomainPlane(max=15, rad=0.03, spacing=2):
     ImagDisplay.select()
-    gray = (0.6,0.6,0.6)
+    gray = vector(0.6,0.6,0.6)
     
     for v in range(-max,max+1,spacing):
-        cylinder(pos=(v,-max,0), axis=(0,2*max,0), radius=rad, color=gray, opacity=0.2) ## parallel to y axis, vary x
-        cylinder(pos=(-max,v,0), axis=(2*max,0,0), radius=rad, color=gray, opacity=0.2) ## parallel to x axis, vary y
+## parallel to y axis, vary x
+        cylinder(pos=vector(v,-max,0), axis=vector(0,2*max,0), radius=rad, color=gray, opacity=0.2) 
+## parallel to x axis, vary y
+        cylinder(pos=vector(-max,v,0), axis=vector(2*max,0,0), radius=rad, color=gray, opacity=0.2) 
 
-    Raxis=cylinder(color=color.green, pos=(-max,0,0), axis=(2*max,0,0), radius=5*rad)
-    Rlbl=label(pos=(max+1,0,0), text="Re", color=gray, opacity=0, height=30)
+    Raxis=cylinder(color=color.green, pos=vector(-max,0,0), axis=vector(2*max,0,0), radius=5*rad)
+    Rlbl=label(pos=vector(max+1,0,0), text="Re", color=gray, opacity=0, height=30)
     
-    Iaxis=cylinder(color=color.magenta, pos=(0,-max,0), axis=(0,2*max,0), radius=5*rad)
-    Ilbl=label(pos=(0,max+1,0), text="Im", color=gray, opacity=0, height=30)
+    Iaxis=cylinder(color=color.magenta, pos=vector(0,-max,0), axis=vector(0,2*max,0), radius=5*rad)
+    Ilbl=label(pos=vector(0,max+1,0), text="Im", color=gray, opacity=0, height=30)
 
 def drawRealImagePlane(max=15, rad=0.03, spacing=2):
     RealDisplay.select()
-    gray = (0.2,0.2,0.2)
+    gray = vector(0.2,0.2,0.2)
     
     for v in range(-max,max+1,spacing):
-        cylinder(pos=(0,-max,v), axis=(0,2*max,0), radius=rad, color=gray, opacity=0.2) ## parallel to y axis, vary z
-        cylinder(pos=(0,v,-max), axis=(0,0,2*max), radius=rad, color=gray, opacity=0.2) ## parallel to z axis, vary y
+## parallel to y axis, vary z
+        cylinder(pos=vector(0,-max,v), axis=vector(0,2*max,0), radius=rad, color=gray, opacity=0.2) 
+## parallel to z axis, vary y
+        cylinder(pos=vector(0,v,-max), axis=vector(0,0,2*max), radius=rad, color=gray, opacity=0.2) 
 
-    Raxis=cylinder(color=color.red, pos=(0,0,-max), axis=(0,0,2*max), radius=5*rad)
-    Rlbl=label(pos=(0,0,-(max+1)), text="Re", color=gray, opacity=0, height=30)
+    Raxis=cylinder(color=color.red, pos=vector(0,0,-max), axis=vector(0,0,2*max), radius=5*rad)
+    Rlbl=label(pos=vector(0,0,-(max+1)), text="Re", color=gray, opacity=0, height=30)
     
-    Ilbl=label(pos=(0,max+4,0), text="Im", color=gray, opacity=0, height=30)
+    Ilbl=label(pos=vector(0,max+4,0), text="Im", color=gray, opacity=0, height=30)
 
 def drawImagImagePlane(max=15, rad=0.03, spacing=2):
     ImagDisplay.select()
-    gray = (0.2,0.2,0.2)
+    gray = vector(0.2,0.2,0.2)
     
     for v in range(-max,max+1,spacing):
-        cylinder(pos=(-max,0,v), axis=(2*max,0,0), radius=rad, color=gray, opacity=0.2) ## parallel to x axis, vary z
-        cylinder(pos=(v,0,-max), axis=(0,0,2*max), radius=rad, color=gray, opacity=0.2) ## parallel to z axis, vary x
+## parallel to x axis, vary z
+        cylinder(pos=vector(-max,0,v), axis=vector(2*max,0,0), radius=rad, color=gray, opacity=0.2) 
+## parallel to z axis, vary x
+        cylinder(pos=vector(v,0,-max), axis=vector(0,0,2*max), radius=rad, color=gray, opacity=0.2) 
 
-    Rlbl=label(pos=(max+4,0,0), text="Re", color=gray, opacity=0, height=30)
+    Rlbl=label(pos=vector(max+4,0,0), text="Re", color=gray, opacity=0, height=30)
 
-    Iaxis=cylinder(color=color.red, pos=(0,0,-max), axis=(0,0,2*max), radius=5*rad)
-    Ilbl=label(pos=(0,0,-(max+1)), text="Im", color=gray, opacity=0, height=30)
+    Iaxis=cylinder(color=color.red, pos=vector(0,0,-max), axis=vector(0,0,2*max), radius=5*rad)
+    Ilbl=label(pos=vector(0,0,-(max+1)), text="Im", color=gray, opacity=0, height=30)
 
 # ==============================================================================================================
 drawImagDomainPlane()
@@ -129,7 +142,7 @@ def mod(z):
 # z must be a vector
 # returns a real number
 def arg(z):
-    return np.arctan2(z.y, z.x)
+    return np.atan2(z.y, z.x)
 
 # conjugate
 # z must be a vector
@@ -156,14 +169,17 @@ def div(z,w):
 # n must be an integer
 # returns z^n
 def power(z,n):
-    if n == 0: # z^0 = 1
+# z^0 = 1
+    if n == 0: 
         return vector(1,0,0)
     w = z
     for i in range(2,abs(n)+1):
         w = mult(w,z)
-    if n > 0: # z^n
+# z^n
+    if n > 0: 
         return w
-    else: # z^(-n) = 1/z^n
+# z^(-n) = 1/z^n
+    else: 
         return div(vector(1,0,0),w)
 
 # complex exponential
@@ -176,10 +192,12 @@ def iExp(theta):
 # functions to plot go here
 # note: z is a vector (z = (a,b,0) = a + bi)
 
-def Log(z): # Log(z)
+# Log(z)
+def Log(z): 
     return vector(np.log(mod(z)), arg(z), 0)
 
-def squared(z): # z^2
+# z^2
+def squared(z): 
     return mult(z,z)
 
 # e^z, this function is computed using real and imaginary exponetials seperately
@@ -245,11 +263,15 @@ def drawSurface(S, f, c, plot):
 #
 # the array of points created (and returned) has the form of 'S' in 'drawSurface()' method
 def makeDomRec(Rmin, Rmax, Imin, Imax, step=0.5):
-    rec = [] # rectangele vector array (each set of 3 vectors is a triangle)
-    col = [] # colours array
+# rectangele vector array (each set of 3 vectors is a triangle)
+    rec = [] 
+# colours array
+    col = [] 
     
-    Rrange = int((Rmax - Rmin)/step) + 1 # the number of steps in the real direction
-    Irange = int((Imax - Imin)/step) + 1 # the number of steps in the imaginary direction
+# the number of steps in the real direction
+    Rrange = int((Rmax - Rmin)/step) + 1 
+# the number of steps in the imaginary direction
+    Irange = int((Imax - Imin)/step) + 1 
 
     dColReal = 1.0/Rrange
     dColImag = 1.0/Irange
@@ -264,8 +286,10 @@ def makeDomRec(Rmin, Rmax, Imin, Imax, step=0.5):
             topTri = [vector(R, I, 0), vector(R+dR, I, 0), vector(R+dR, I+dI, 0)]
             botTri = [vector(R, I, 0), vector(R, I+dI, 0), vector(R+dR, I+dI, 0)]
 
-            topCol = [(0,r*dColReal,1)]*3 # go from dark blue to cyan as the real part moves in +ve direction
-            botCol = [(i*dColImag,i*dColImag,i*dColImag)]*3 # go from light gray to dark gray as the imaginary part move in +ve direction
+# go from dark blue to cyan as the real part moves in +ve direction
+            topCol = [(0,r*dColReal,1)]*3 
+# go from light gray to dark gray as the imaginary part move in +ve direction
+            botCol = [(i*dColImag,i*dColImag,i*dColImag)]*3 
 
             rec += topTri + botTri
             col += topCol + botCol
@@ -309,7 +333,8 @@ def mapShape(S, C, Rbound, Ibound, plot):
 #k.y = [1]*len(k.x)
 #drawCurve(k)
 
-pos, colour = makeDomRec(0,10,0,10) #makeDomRec(realSliderB.value,realSliderA.value,imagSliderB.value,imagSliderA.value)
+#makeDomRec(realSliderB.value,realSliderA.value,imagSliderB.value,imagSliderA.value)
+pos, colour = makeDomRec(0,10,0,10) 
 
 global fr, fdash, Fr, Fdash
 
