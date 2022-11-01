@@ -1,5 +1,4 @@
-from visual import *
-from visual.controls import *
+from vpython import *
 import numpy as np
 import math
 
