@@ -25,10 +25,18 @@ The way that the graph is formed is like so:
 
 ## How the code works
 
-The library used to build the 3D objects is VPython. You can install that with `pip install vpython`, and then you can run the grapher with `python ComplexPlotter.py`. Running the script produces 2 3D spaces each containing one of the domain/image plane intersections described above.
+The library used to build the 3D objects is [VPython](https://duckduckgo.com/?t=ffab&q=vpython&ia=web). You can install that with `pip install vpython`, and then you can run the grapher with `python ComplexPlotter.py`. Running the script produces 2 3D spaces each containing one of the domain/image plane intersections described above.
 
 Instead of trying to map the whole domain plane there is a coloured rectangle that is mapped. This helps the viewer to figure out how which point in the domain plane resulted in the mapped point.
 
 The graph surfaces are made up of small triangles, which means the surfaces are not perfectly smooth, but this method of building surfaces is easy to work with and allows for colouring to help the viewer see what is going on.
 
+You can change which function is plotted by changing `f` in the code. Note that there are a few pre-written functions available to use.
+
 ## Screenshots
+
+![Just the axes](https://user-images.githubusercontent.com/48631759/200191818-84a73bac-3921-4c0c-9392-7146d5814f7a.png)
+
+![Axes with domain planes](https://user-images.githubusercontent.com/48631759/200191837-401eb65b-6419-4d94-911f-c4e3af459125.png)
+
+![exp(z) applied to the domain plane](https://user-images.githubusercontent.com/48631759/200191954-6b3af1cd-fdf6-4670-9217-b3f19a8f0214.png)
