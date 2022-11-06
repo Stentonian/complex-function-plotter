@@ -504,6 +504,50 @@ def makeDomRec(Rmin, Rmax, Imin, Imax, step=0.5):
     return rec, col
 
 
+def realMapper(mappedTri, originalTri):
+    a = mappedTri[0]
+    b = mappedTri[1]
+    c = mappedTri[2]
+
+    A = originalTri[0]
+    B = originalTri[1]
+    C = originalTri[2]
+
+    one = vector(A.x, a.y, -a.x)
+    two = vector(B.x, b.y, -c.x)
+    three = vector(C.x, c.y, -c.x)
+
+    return [one, two, three]
+
+
+def imagMapper(mappedTri, originalTri):
+    a = mappedTri[0]
+    b = mappedTri[1]
+    c = mappedTri[2]
+
+    A = originalTri[0]
+    B = originalTri[1]
+    C = originalTri[2]
+
+    one = vector(a.x, A.y, -a.y)
+    two = vector(b.x, B.y, -b.y)
+    three = vector(c.x, C.y, -c.y)
+
+    return [one, two, three]
+
+
+def checkWithinBounds(mappedTri, bound):
+    a = mappedTri[0]
+    b = mappedTri[1]
+    c = mappedTri[2]
+
+    one = abs(a.x) < bound and abs(a.y) < bound and abs(a.z) < bound
+    two = abs(b.x) < bound and abs(b.y) < bound and abs(b.z) < bound
+    three = abs(c.x) < bound and abs(c.y) < bound and abs(c.z) < bound
+
+    return one and two and three
+
+
 # ==============================================================================================================
 # maps a set of vectors using 'f(z)'
 #
@@ -514,56 +558,44 @@ def makeDomRec(Rmin, Rmax, Imin, Imax, step=0.5):
 #
 # returns a set of mapped points
 def mapShape(S, C, Rbound, Ibound, plot):
-    mapped = map(lambda v: f(v), S)
+    mapped = list(map(lambda v: [f(v[0]), f(v[1]), f(v[2])], S))
+
+    bound = min(Rbound, Ibound)
+
     mappedPrime = []
     SPrime = []
     CPrime = []
 
-    for i in range(0, len(mapped), 3):
-        if abs(mapped[i].x) < Rbound and abs(mapped[i + 1].x) < Rbound and abs(
-                mapped[i + 2]) < Rbound and abs(mapped[i].y) < Ibound and abs(
-                    mapped[i + 1].y) < Ibound and abs(
-                        mapped[i + 2].y) < Ibound:
-            mappedPrime += [mapped[i], mapped[i + 1], mapped[i + 2]]
-            SPrime += [S[i], S[i + 1], S[i + 2]]
-            CPrime += [C[i], C[i + 1], C[i + 2]]
+    for i in range(0, len(mapped)):
+        if checkWithinBounds(mapped[i], bound):
+            mappedPrime += [mapped[i]]
+            SPrime += [S[i]]
+            CPrime += [C[i]]
 
     if plot == 'real':
         RealDisplay.select()
-        return map(lambda v, w: vector(w.x, v.y, -v.x), mappedPrime,
-                   SPrime), CPrime
+        return list(map(realMapper, mappedPrime, SPrime)), CPrime
     elif plot == 'imag':
         ImagDisplay.select()
-        return map(lambda v, w: vector(v.x, w.y, -v.y), mappedPrime,
-                   SPrime), CPrime
+        return list(map(imagMapper, mappedPrime, SPrime)), CPrime
     else:
         raise Exception('Plot needs to be real or imag')
 
 
 # ==============================================================================================================
 
-#k = curve(x=arange(0,20,0.1), color=color.green)
-#k.y = [1]*len(k.x)
-#drawCurve(k)
-
 #makeDomRec(realSliderB.value,realSliderA.value,imagSliderB.value,imagSliderA.value)
-pos, colour = makeDomRec(0, 10, 0, 10)
-
-global fr, fdash, Fr, Fdash
+pos, colour = makeDomRec(-5, 10, -5, 10)
 
 ImagDisplay.select()
-fr = frame()
-fdash = frame()
-drawSurface(pos, fr, colour, 'imag')
+drawSurface(pos, colour, 'imag')
 newpos, newcolour = mapShape(pos, colour, 20, 20, 'imag')
-drawSurface(newpos, fdash, newcolour, 'imag')
+drawSurface(newpos, newcolour, 'imag')
 
 RealDisplay.select()
-Fr = frame()
-Fdash = frame()
-drawSurface(pos, Fr, colour, 'real')
+drawSurface(pos, colour, 'real')
 newpos, newcolour = mapShape(pos, colour, 20, 20, 'real')
-drawSurface(newpos, Fdash, newcolour, 'real')
+drawSurface(newpos, newcolour, 'real')
 
 # need this when running from terminal: https://vpython.org/presentation2018/install.html
 while True:
