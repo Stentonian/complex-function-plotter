@@ -352,7 +352,7 @@ def cosine(z):
 # use this to pick a function to plot
 # it is crucial to use this function because other methods use this function for computing stuff
 def f(z):
-    return Log(z)
+    return exp(z)
 
 
 # ==============================================================================================================
