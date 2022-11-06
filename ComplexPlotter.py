@@ -417,7 +417,7 @@ def drawSurface(S, f, c, plot):
 # both must be integers
 #
 # the array of points created (and returned) has the form of 'S' in 'drawSurface()' method
-def makeDomRec(Rmin, Rmax, Imin, Imax, step=0.5):
+def makeDomRecOld(Rmin, Rmax, Imin, Imax, step=0.5):
     # rectangele vector array (each set of 3 vectors is a triangle)
     rec = []
     # colours array
@@ -456,6 +456,49 @@ def makeDomRec(Rmin, Rmax, Imin, Imax, step=0.5):
 
             rec += topTri + botTri
             col += topCol + botCol
+
+    return rec, col
+
+
+def makeDomRec(Rmin, Rmax, Imin, Imax, step=0.5):
+    # rectangele vector array (each set of 3 vectors is a triangle)
+    rec = []
+    # colours array
+    col = []
+
+    # the number of steps in the real direction
+    Rrange = int((Rmax - Rmin) / step) + 1
+    # the number of steps in the imaginary direction
+    Irange = int((Imax - Imin) / step) + 1
+
+    dColReal = 1.0 / Rrange
+    dColImag = 1.0 / Irange
+
+    for r in range(Rrange):
+        for i in range(Irange):
+            R = Rmin + r * step
+            I = Imin + i * step
+            dR = step
+            dI = step
+
+            topTri = [
+                vec(R, I, 0),
+                vec(R + dR, I, 0),
+                vec(R + dR, I + dI, 0)
+            ]
+            botTri = [
+                vec(R, I, 0),
+                vec(R, I + dI, 0),
+                vec(R + dR, I + dI, 0)
+            ]
+
+            # go from dark blue to cyan as the real part moves in +ve direction
+            topCol = vec(0, r * dColReal, 1)
+            # go from light gray to dark gray as the imaginary part move in +ve direction
+            botCol = vec(i * dColImag, i * dColImag, i * dColImag)
+
+            rec += [topTri, botTri]
+            col += [topCol, botCol]
 
     return rec, col
 
