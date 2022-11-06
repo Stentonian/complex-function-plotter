@@ -378,24 +378,9 @@ def mapCurve(c):
 # S mst be an array of traingle vertices e.g.
 #   S = [(0,0,0), (0,1,0), (0,0,1), --> first tirangle's three vertices
 #        (x,y,z), (x,y,z), (x,y,z)] --> second triangle's three vertices
-# f must be a frame
 # c must be a color
 # plot must be a string, either 'real' or 'imag', specifies on which display to draw
-def drawSurfaceOld(S, f, c, plot):
-    if plot == 'real':
-        RealDisplay.select()
-    elif plot == 'imag':
-        ImagDisplay.select()
-    else:
-        raise Exception('drawSurface requires plot to be real or imag')
-
-    shape = faces(pos=S, color=c, frame=f)
-    shape.make_normals()
-    shape.make_twosided()
-    shape.smooth()
-
-
-def drawSurface(S, f, c, plot):
+def drawSurface(S, c, plot):
     if plot == 'real':
         RealDisplay.select()
     elif plot == 'imag':
@@ -418,49 +403,6 @@ def drawSurface(S, f, c, plot):
 # both must be integers
 #
 # the array of points created (and returned) has the form of 'S' in 'drawSurface()' method
-def makeDomRecOld(Rmin, Rmax, Imin, Imax, step=0.5):
-    # rectangele vector array (each set of 3 vectors is a triangle)
-    rec = []
-    # colours array
-    col = []
-
-    # the number of steps in the real direction
-    Rrange = int((Rmax - Rmin) / step) + 1
-    # the number of steps in the imaginary direction
-    Irange = int((Imax - Imin) / step) + 1
-
-    dColReal = 1.0 / Rrange
-    dColImag = 1.0 / Irange
-
-    for r in range(Rrange):
-        for i in range(Irange):
-            R = Rmin + r * step
-            I = Imin + i * step
-            dR = step
-            dI = step
-
-            topTri = [
-                vector(R, I, 0),
-                vector(R + dR, I, 0),
-                vector(R + dR, I + dI, 0)
-            ]
-            botTri = [
-                vector(R, I, 0),
-                vector(R, I + dI, 0),
-                vector(R + dR, I + dI, 0)
-            ]
-
-            # go from dark blue to cyan as the real part moves in +ve direction
-            topCol = [(0, r * dColReal, 1)] * 3
-            # go from light gray to dark gray as the imaginary part move in +ve direction
-            botCol = [(i * dColImag, i * dColImag, i * dColImag)] * 3
-
-            rec += topTri + botTri
-            col += topCol + botCol
-
-    return rec, col
-
-
 def makeDomRec(Rmin, Rmax, Imin, Imax, step=0.5):
     # rectangele vector array (each set of 3 vectors is a triangle)
     rec = []
