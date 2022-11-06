@@ -380,7 +380,7 @@ def mapCurve(c):
 # f must be a frame
 # c must be a color
 # plot must be a string, either 'real' or 'imag', specifies on which display to draw
-def drawSurface(S, f, c, plot):
+def drawSurfaceOld(S, f, c, plot):
     if plot == 'real':
         RealDisplay.select()
     elif plot == 'imag':
@@ -392,6 +392,20 @@ def drawSurface(S, f, c, plot):
     shape.make_normals()
     shape.make_twosided()
     shape.smooth()
+
+
+def drawSurface(S, f, c, plot):
+    if plot == 'real':
+        RealDisplay.select()
+    elif plot == 'imag':
+        ImagDisplay.select()
+    else:
+        raise Exception('drawSurface requires plot to be real or imag')
+
+    for i in range(len(S)):
+        triangle(vs=[vertex(pos=S[i][0], color=c[i]),
+                     vertex(pos=S[i][1], color=c[i]),
+                     vertex(pos=S[i][2], color=c[i])])
 
 
 # ==============================================================================================================
