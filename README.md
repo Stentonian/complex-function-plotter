@@ -35,8 +35,14 @@ You can change which function is plotted by changing `f` in the code. Note that 
 
 ## Screenshots
 
+Just the axes
+
 ![Just the axes](https://user-images.githubusercontent.com/48631759/200191818-84a73bac-3921-4c0c-9392-7146d5814f7a.png)
 
+Axes with domain planes
+
 ![Axes with domain planes](https://user-images.githubusercontent.com/48631759/200191837-401eb65b-6419-4d94-911f-c4e3af459125.png)
+
+exp(z) applied to the domain plane
 
 ![exp(z) applied to the domain plane](https://user-images.githubusercontent.com/48631759/200191954-6b3af1cd-fdf6-4670-9217-b3f19a8f0214.png)
