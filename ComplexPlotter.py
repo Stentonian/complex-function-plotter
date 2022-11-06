@@ -24,78 +24,77 @@ ImagDisplay = canvas(#title='Real axes paralell, Imaginary axes orthogonal',
                      background=color.white)
 ImagDisplay.range = Range
 
-# ==============================================================================================================
-# control methods for the sliders
+# # ==============================================================================================================
+# # control methods for the sliders
+
+# # used by the slider action methods
+# def redrawAll(frames, plot):
+#     # must have the correct display selected before calling this method
+
+#     for frame in frames:
+#         for obj in frame.objects:
+#             obj.visible = False
+#             del obj
+
+#     realT = max(realSliderA.value, realSliderB.value)
+#     realB = min(realSliderA.value, realSliderB.value)
+#     imagT = max(imagSliderA.value, imagSliderB.value)
+#     imagB = min(imagSliderA.value, imagSliderB.value)
+
+#     pos, colour = makeDomRec(realB, realT, imagB, imagT)
+
+#     drawSurface(pos, frames[0], colour, plot)
+#     newpos, newcolour = mapShape(pos, colour, 20, 20, plot)
+#     drawSurface(newpos, frames[1], newcolour, plot)
 
 
-# used by the slider action methods
-def redrawAll(frames, plot):
-    # must have the correct display selected before calling this method
+# # when either the right or the left slider is moved
+# def sliderAction():
+#     RealDisplay.select()
+#     frames = [Fr, Fdash]
+#     redrawAll(frames, 'real')
 
-    for frame in frames:
-        for obj in frame.objects:
-            obj.visible = False
-            del obj
+#     ImagDisplay.select()
+#     frames = [fr, fdash]
+#     redrawAll(frames, 'imag')
 
-    realT = max(realSliderA.value, realSliderB.value)
-    realB = min(realSliderA.value, realSliderB.value)
-    imagT = max(imagSliderA.value, imagSliderB.value)
-    imagB = min(imagSliderA.value, imagSliderB.value)
+# # ==============================================================================================================
+# # controls
 
-    pos, colour = makeDomRec(realB, realT, imagB, imagT)
-
-    drawSurface(pos, frames[0], colour, plot)
-    newpos, newcolour = mapShape(pos, colour, 20, 20, plot)
-    drawSurface(newpos, frames[1], newcolour, plot)
-
-
-# when either the right or the left slider is moved
-def sliderAction():
-    RealDisplay.select()
-    frames = [Fr, Fdash]
-    redrawAll(frames, 'real')
-
-    ImagDisplay.select()
-    frames = [fr, fdash]
-    redrawAll(frames, 'imag')
-
-# ==============================================================================================================
-# controls
-
-# control panel equipment
-control = controls(title='Controlling the Scene',
-                   x=0,
-                   y=dimension + 10,
-                   width=dimension * 2,
-                   height=150)
-# increase side A of the domain rectangle, parallel to the real axis
-realSliderA = slider(pos=vector(-80, 5, 0),
-                     length=50,
-                     min=-10,
-                     max=10,
-                     value=5,
-                     bind=sliderAction)
-# increase side B of the domain rectangle, parallel to the real axis
-realSliderB = slider(pos=vector(-80, -5, 0),
-                     length=50,
-                     min=-10,
-                     max=10,
-                     value=0,
-                     bind=sliderAction)
-# increase side A of the domain rectangle, parallel to the imaginary axis
-imagSliderA = slider(pos=vector(0, 5, 0),
-                     length=50,
-                     min=-10,
-                     max=10,
-                     value=5,
-                     bind=sliderAction)
-# increase side B of the domain rectangle, parallel to the imaginary axis
-imagSliderB = slider(pos=vector(0, -5, 0),
-                     length=50,
-                     min=-10,
-                     max=10,
-                     value=0,
-                     bind=sliderAction)
+# # control panel equipment
+# control = controls(title='Controlling the Scene',
+#                    x=0,
+#                    y=dimension + 10,
+#                    width=dimension * 2,
+#                    height=150)
+# # increase side A of the domain rectangle, parallel to the real axis
+# realSliderA = slider(pos=vector(-80, 5, 0),
+#                      length=50,
+#                      min=-10,
+#                      max=10,
+#                      value=5,
+#                      bind=sliderAction)
+# # increase side B of the domain rectangle, parallel to the real axis
+# realSliderB = slider(pos=vector(-80, -5, 0),
+#                      length=50,
+#                      min=-10,
+#                      max=10,
+#                      value=0,
+#                      bind=sliderAction)
+# # increase side A of the domain rectangle, parallel to the imaginary axis
+# imagSliderA = slider(pos=vector(0, 5, 0),
+#                      length=50,
+#                      min=-10,
+#                      max=10,
+#                      value=5,
+#                      bind=sliderAction)
+# # increase side B of the domain rectangle, parallel to the imaginary axis
+# imagSliderB = slider(pos=vector(0, -5, 0),
+#                      length=50,
+#                      min=-10,
+#                      max=10,
+#                      value=0,
+#                      bind=sliderAction)
 
 # ==============================================================================================================
 # construct the grid systems (so that you can see the domain and image Planes clearly)
