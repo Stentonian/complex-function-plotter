@@ -268,7 +268,7 @@ def mod(z):
 # z must be a vector
 # returns a real number
 def arg(z):
-    return np.atan2(z.y, z.x)
+    return np.arctan2(z.y, z.x)
 
 
 # conjugate
@@ -327,6 +327,8 @@ def iExp(theta):
 
 # Log(z)
 def Log(z):
+    if mod(z) == 0:
+        return vector(-1000000, arg(z), 0)
     return vector(np.log(mod(z)), arg(z), 0)
 
 
