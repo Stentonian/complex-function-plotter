@@ -3,22 +3,22 @@ import numpy as np
 import math
 
 # all the windows sizes are scaled to this number (so change this number if you want to resize)
-dimension = 600
+dimension = 1200
 Range = 20
 
 # the real axis for the domain plane is perpindicular to that of the image Plane, while thier imaginary azes are parallel
-RealDisplay = canvas(title='Imaginary axes paralell, real axes orthogonal',
-                     x=0,
-                     y=0,
+RealDisplay = canvas(#title='Imaginary axes paralell, real axes orthogonal',
+                     align='left',
+                     #caption='  Imaginary axes paralell,\n  real axes orthogonal',
                      width=dimension,
                      height=dimension,
                      background=color.white)
 RealDisplay.range = Range
 
 # the imaginary axis for the domain plane is perpindicular to that of the image Plane, while thier real azes are parallel
-ImagDisplay = canvas(title='Real axes paralell, Imaginary axes orthogonal',
-                     x=dimension + 10,
-                     y=0,
+ImagDisplay = canvas(#title='Real axes paralell, Imaginary axes orthogonal',
+                     align='right',
+                     #caption='  Real axes paralell,\n  imaginary axes orthogonal',
                      width=dimension,
                      height=dimension,
                      background=color.white)
