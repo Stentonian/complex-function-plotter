@@ -24,41 +24,6 @@ ImagDisplay = canvas(title='Real axes paralell, Imaginary axes orthogonal',
                      background=color.white)
 ImagDisplay.range = Range
 
-# control panel equipment
-control = controls(title='Controlling the Scene',
-                   x=0,
-                   y=dimension + 10,
-                   width=dimension * 2,
-                   height=150)
-# increase side A of the domain rectangle, parallel to the real axis
-realSliderA = slider(pos=vector(-80, 5, 0),
-                     length=50,
-                     min=-10,
-                     max=10,
-                     value=5,
-                     action=lambda: sliderAction())
-# increase side B of the domain rectangle, parallel to the real axis
-realSliderB = slider(pos=vector(-80, -5, 0),
-                     length=50,
-                     min=-10,
-                     max=10,
-                     value=0,
-                     action=lambda: sliderAction())
-# increase side A of the domain rectangle, parallel to the imaginary axis
-imagSliderA = slider(pos=vector(0, 5, 0),
-                     length=50,
-                     min=-10,
-                     max=10,
-                     value=5,
-                     action=lambda: sliderAction())
-# increase side B of the domain rectangle, parallel to the imaginary axis
-imagSliderB = slider(pos=vector(0, -5, 0),
-                     length=50,
-                     min=-10,
-                     max=10,
-                     value=0,
-                     action=lambda: sliderAction())
-
 # ==============================================================================================================
 # control methods for the sliders
 
@@ -94,6 +59,43 @@ def sliderAction():
     frames = [fr, fdash]
     redrawAll(frames, 'imag')
 
+# ==============================================================================================================
+# controls
+
+# control panel equipment
+control = controls(title='Controlling the Scene',
+                   x=0,
+                   y=dimension + 10,
+                   width=dimension * 2,
+                   height=150)
+# increase side A of the domain rectangle, parallel to the real axis
+realSliderA = slider(pos=vector(-80, 5, 0),
+                     length=50,
+                     min=-10,
+                     max=10,
+                     value=5,
+                     bind=sliderAction)
+# increase side B of the domain rectangle, parallel to the real axis
+realSliderB = slider(pos=vector(-80, -5, 0),
+                     length=50,
+                     min=-10,
+                     max=10,
+                     value=0,
+                     bind=sliderAction)
+# increase side A of the domain rectangle, parallel to the imaginary axis
+imagSliderA = slider(pos=vector(0, 5, 0),
+                     length=50,
+                     min=-10,
+                     max=10,
+                     value=5,
+                     bind=sliderAction)
+# increase side B of the domain rectangle, parallel to the imaginary axis
+imagSliderB = slider(pos=vector(0, -5, 0),
+                     length=50,
+                     min=-10,
+                     max=10,
+                     value=0,
+                     bind=sliderAction)
 
 # ==============================================================================================================
 # construct the grid systems (so that you can see the domain and image Planes clearly)
