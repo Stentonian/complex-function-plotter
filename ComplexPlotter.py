@@ -386,7 +386,7 @@ def drawSurface(S, f, c, plot):
     elif plot == 'imag':
         ImagDisplay.select()
     else:
-        print('you fucked up in the drawSurfaces method')
+        raise Exception('drawSurface requires plot to be real or imag')
 
     shape = faces(pos=S, color=c, frame=f)
     shape.make_normals()
@@ -479,8 +479,7 @@ def mapShape(S, C, Rbound, Ibound, plot):
         return map(lambda v, w: vector(v.x, w.y, -v.y), mappedPrime,
                    SPrime), CPrime
     else:
-        print('you fucked up in the mapShape function')
-        exit()
+        raise Exception('Plot needs to be real or imag')
 
 
 # ==============================================================================================================
